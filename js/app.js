@@ -14,12 +14,16 @@ const searchOBJ = {
   crypto: "",
 };
 
-function consultCryptos() {
+async function consultCryptos() {
   const url = "https://min-api.cryptocompare.com/data/top/mktcapfull?limit=10&tsym=USD";
-
-  fetch(url)
-    .then((response) => response.json())
-    .then((result) => getCryptos(result.Data));
+  
+  try {
+    const response = await fetch(url);
+    const result = await response.json();
+    getCryptos(result.Data);
+  } catch (error) {
+      console.log(error);
+  }
 }
 
 function getCryptos(cryptos) {
@@ -65,14 +69,20 @@ function printAlert(message) {
   }, 2000);
 }
 
-function apiConsult() {
+async function apiConsult() {
   const { coin, crypto } = searchOBJ;
   const url = `https://min-api.cryptocompare.com/data/pricemultifull?fsyms=${crypto}&tsyms=${coin}`;
   showSpinner();
 
-  fetch(url)
-    .then((response) => response.json())
-    .then((result) => showQuotation(result.DISPLAY[crypto][coin]));
+  try {
+     const response = await fetch();
+     const result = await response.json();
+     showQuotation(result.DISPLAY[crypto][coin]);
+  } catch (error){
+     console.log(error);
+  }
+ 
+  
 }
 
 function showQuotation(quotation) {
