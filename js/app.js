@@ -75,7 +75,7 @@ async function apiConsult() {
   showSpinner();
 
   try {
-     const response = await fetch();
+     const response = await fetch(url);
      const result = await response.json();
      showQuotation(result.DISPLAY[crypto][coin]);
   } catch (error){
